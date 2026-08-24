@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ producto.nombre }} - Detalle</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        body { background-color: #f4f4f9; padding: 20px; }
+        .container { max-width: 650px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .btn-volver { display: inline-block; color: #007bff; text-decoration: none; font-weight: bold; margin-bottom: 15px; }
+        .img-principal { width: 100%; height: auto; max-height: 400px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
+        h1 { font-size: 1.5rem; color: #333; margin-bottom: 8px; }
+        .precio { color: #2e7d32; font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; }
+        .seccion-titulo { font-size: 1.1rem; font-weight: bold; margin-top: 20px; margin-bottom: 10px; color: #444; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+        .texto-contenido { color: #555; line-height: 1.6; font-size: 0.95rem; white-space: pre-line; margin-bottom: 15px; }
+        
+        .galeria-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px; }
+        .galeria-grid img { width: 100%; height: 110px; object-fit: cover; border-radius: 6px; border: 1px solid #ddd; }
+        
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 8px; margin-bottom: 20px; }
+        .video-container iframe, .video-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        
+        .btn-wsp { display: block; background-color: #25D366; color: white; text-align: center; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1rem; margin-top: 15px; margin-bottom: 10px; }
+        .btn-wsp:hover { background-color: #128C7E; }
+        
+        .btn-editar { display: block; background-color: #ffc107; color: #000; text-align: center; padding: 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.95rem; margin-top: 10px; }
+        .btn-editar:hover { background-color: #e0a800; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="btn-volver">&larr; Volver al catálogo</a>
+        
+        <img src="{{ producto.imagen }}" alt="{{ producto.nombre }}" class="img-principal">
+        
+        <h1>{{ producto.nombre }}</h1>
+        <div class="precio">${{ producto.precio }} / mes</div>
+
+        {% if producto.descripcion %}
+            <div class="texto-contenido">{{ producto.descripcion }}</div>
+        {% endif %}
+
+        {% if fotos_extra %}
+            <div class="seccion-titulo">Galería de imágenes</div>
+            <div class="galeria-grid">
+                {% for foto in fotos_extra %}
+                    <a href="{{ foto }}" target="_blank">
+                        <img src="{{ foto }}" alt="Foto adicional">
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if producto.texto_extra %}
+            <div class="seccion-titulo">Detalles del Servicio / Producto</div>
+            <div class="texto-contenido">{{ producto.texto_extra }}</div>
+        {% endif %}
+
+        {% if producto.video_url %}
+            <div class="seccion-titulo">Video Demostrativo</div>
+            <div class="video-container">
+                {% if 'youtube.com' in producto.video_url or 'youtu.be' in producto.video_url %}
+                    {% set video_id = producto.video_url.split('v=')[-1].split('&')[0] if 'v=' in producto.video_url else producto.video_url.split('/')[-1] %}
+                    <iframe src="https://www.youtube.com/embed/{{ video_id }}" allowfullscreen></iframe>
+                {% else %}
+                    <a href="{{ producto.video_url }}" target="_blank" style="color:white; display:flex; align-items:center; justify-center; height:100%; text-decoration:none;">Ver Video Externo</a>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <a href="https://wa.me/5493765247994?text=Hola!%20Me%20interesa%20consultar%20por:%20{{ producto.nombre }}" 
+           target="_blank" 
+           class="btn-wsp">
+            Solicitar prueba Gratis
+        </a>
+
+        {% if es_admin %}
+            <a href="/admin/editar/{{ producto.id }}" class="btn-editar">Editar este producto</a>
+        {% endif %}
+    </div>
+</body>
+</html>

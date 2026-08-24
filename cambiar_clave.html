@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambiar Credenciales</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        body { background-color: #f4f4f9; padding: 20px; display: flex; justify-content: center; }
+        .form-card { background: white; padding: 20px; border-radius: 10px; width: 100%; max-width: 400px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h2 { margin-bottom: 15px; text-align: center; }
+        input, button { width: 100%; margin-bottom: 12px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; }
+        button { background-color: #007bff; color: white; border: none; cursor: pointer; }
+        .msg { color: green; text-align: center; margin-bottom: 10px; }
+        a { display: block; text-align: center; color: #007bff; text-decoration: none; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="form-card">
+        <h2>Cambiar Usuario y Clave</h2>
+        {% if mensaje %}<p class="msg">{{ mensaje }}</p>{% endif %}
+        <form action="/admin/cambiar_clave" method="POST">
+            <input type="text" name="username" placeholder="Nuevo Usuario" required>
+            <input type="password" name="password" placeholder="Nueva Contraseña" required>
+            <button type="submit">Actualizar Acceso</button>
+        </form>
+        <a href="/">Volver al Catálogo</a>
+    </div>
+</body>
+</html>

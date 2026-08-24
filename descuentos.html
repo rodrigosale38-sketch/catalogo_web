@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descuentos - {{ producto.nombre }}</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        body { background-color: #f4f4f9; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h1 { margin-bottom: 5px; color: #333; font-size: 1.4rem; }
+        .precio-base { color: #666; font-size: 0.95rem; margin-bottom: 20px; }
+        .box-descuentos { background-color: #fff3cd; border-left: 5px solid #ffc107; padding: 15px; margin-bottom: 20px; border-radius: 6px; white-space: pre-line; font-weight: bold; color: #856404; font-size: 1.05rem; line-height: 1.8; }
+        .btn-wsp { display: block; background-color: #25D366; color: white; text-align: center; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1rem; margin-bottom: 15px; }
+        .btn-wsp:hover { background-color: #128C7E; }
+        .btn-volver { display: inline-block; color: #007bff; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="btn-volver">&larr; Volver al catálogo</a>
+        <h1 style="margin-top:15px;">{{ producto.nombre }}</h1>
+        <div class="precio-base">Precio base: <strong>${{ producto.precio }} / mes</strong></div>
+        
+        <h3>Planes y Precios Promocionales:</h3>
+        {% if producto.descuentos %}
+            <div class="box-descuentos">{{ producto.descuentos }}</div>
+        {% else %}
+            <p style="color: #666; margin: 15px 0;">No hay descuentos o promociones registradas actualmente para este producto.</p>
+        {% endif %}
+
+        <a href="https://wa.me/5493765247994?text=Hola!%20Me%20interesa%20consultar%20por%20los%20descuentos%20de:%20{{ producto.nombre }}" 
+           target="_blank" 
+           class="btn-wsp">
+            Solicitar prueba Gratis
+        </a>
+    </div>
+</body>
+</html>
